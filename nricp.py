@@ -6,6 +6,12 @@ import open3d as o3d
 import copy
 
 def choleskySolve(M, b):
+    # 解决最小二乘优化
+    # M is a sparse matrix
+    # print(M.diagonal())
+    # term = M.diagonal() + 1e-6
+    # print(term)
+    # M.setdiag(term)
 
     factor = cholesky_AAt(M.T)
     return factor(M.T.dot(b)).toarray()
@@ -115,9 +121,10 @@ def nonrigidIcp(sourcemesh,targetmesh):
             indices = indices.squeeze()
             
             matches = target_vertices[indices]
+            print(distances)
             
             #rigtnow setting threshold manualy, but if we have and landmark info we could set here
-            mismatches = np.where(distances>0.02)[0]
+            mismatches = np.where(distances > 120)[0]
             
             
             if normalWeighting:
